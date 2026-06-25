@@ -1,6 +1,10 @@
 # syntax=docker/dockerfile:1
 FROM node:20-slim AS base
 ENV NODE_ENV=production
+# SQLite location (relative to prisma/schema.prisma → prisma/dev.db). Needed by
+# `prisma db push` at build time; .env is excluded from the image by design.
+# docker-compose can override this via env_file at runtime.
+ENV DATABASE_URL="file:./dev.db"
 WORKDIR /app
 
 # Install OpenSSL — Prisma's query engine needs it at runtime on slim images.
