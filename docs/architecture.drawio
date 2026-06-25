@@ -105,11 +105,21 @@
         <mxCell id="e_prisma_db" value="DB read / write" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;exitX=1;exitY=0.5;entryX=0;entryY=0.4;" edge="1" parent="1" source="prisma" target="db"><mxGeometry relative="1" as="geometry" /></mxCell>
 
         <!-- edge: email delivers signing link back to recipient -->
-        <mxCell id="e_inbox_rec" value="emails signing link" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;fontSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=1;" edge="1" parent="1" source="inbox" target="c_recipient">
+        <mxCell id="e_inbox_rec" value="3 signing link &#8594; recipient" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;fontSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=1;" edge="1" parent="1" source="inbox" target="c_recipient">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1200" y="680" />
               <mxPoint x="140" y="680" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- edge: completion email + signed PDF delivered to the sender -->
+        <mxCell id="e_inbox_sender" value="6 completed signed PDF &#8594; sender" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;fontSize=10;exitX=0.5;exitY=0;entryX=0.5;entryY=0;" edge="1" parent="1" source="inbox" target="c_sender">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1200" y="45" />
+              <mxPoint x="140" y="45" />
             </Array>
           </mxGeometry>
         </mxCell>

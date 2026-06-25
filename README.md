@@ -54,7 +54,8 @@ flowchart LR
   API --> PRISMA --> DB
   API -->|PDF read/write| FILES
   MAIL -->|3 invite / 6 completed| SMTP --> INBOX
-  INBOX -.signing link.-> R
+  INBOX -.3 signing link.-> R
+  INBOX -.6 completed signed PDF.-> S
   SW -.reads /api/openapi.-> API
 ```
 
