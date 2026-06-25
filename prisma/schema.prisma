@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// status: DRAFT | SENT | COMPLETED
+model Document {
+  id           String      @id @default(cuid())
+  title        String
+  originalPath String
+  signedPath   String?
+  status       String      @default("DRAFT")
+  senderEmail  String
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  recipients   Recipient[]
+  fields       Field[]
+}
+
+// status: PENDING | SIGNED
+model Recipient {
+  id           String    @id @default(cuid())
+  documentId   String
+  name         String
+  email        String
+  signingToken String    @unique @default(cuid())
+  status       String    @default("PENDING")
+  signedAt     DateTime?
+  document     Document  @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  fields       Field[]
+}
+
+// type: SIGNATURE | CHECKBOX | TEXT | RADIO | DATE
+model Field {
+  id          String     @id @default(cuid())
+  documentId  String
+  recipientId String?
+  type        String
+  page        Int        @default(0)
+  xFrac       Float
+  yFrac       Float
+  wFrac       Float
+  hFrac       Float
+  value       String?
+  required    Boolean    @default(true)
+  groupName   String?
+  optionLabel String?
+  // null = manual; "NAME" | "EMAIL" | "DATE" auto-populate from recipient/today.
+  autoFill    String?
+  document    Document   @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  recipient   Recipient? @relation(fields: [recipientId], references: [id], onDelete: SetNull)
+}

@@ -1,0 +1,23 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      # Keep the SQLite file on the persisted volume regardless of .env.
+      DATABASE_URL: "file:./dev.db"
+      APP_URL: "http://localhost:3000"
+    volumes:
+      # Persist the SQLite database across restarts/rebuilds.
+      - db-data:/app/prisma
+      # Persist uploaded + signed PDFs across restarts/rebuilds.
+      - uploads-data:/app/uploads
+    restart: unless-stopped
+
+volumes:
+  db-data:
+  uploads-data:
