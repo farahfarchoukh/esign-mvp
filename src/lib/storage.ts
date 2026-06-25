@@ -1,8 +1,12 @@
 import fs from "fs";
 import path from "path";
 
-// All uploaded + signed PDFs live under ./uploads (gitignored).
-export const UPLOAD_DIR = path.join(process.cwd(), "uploads");
+// All uploaded + signed PDFs live under ./uploads (gitignored) by default.
+// On a hosted deployment set UPLOAD_DIR to a path on a persistent volume
+// (e.g. /data/uploads) so files survive restarts and redeploys.
+export const UPLOAD_DIR = process.env.UPLOAD_DIR
+  ? path.resolve(process.env.UPLOAD_DIR)
+  : path.join(process.cwd(), "uploads");
 
 export function ensureUploadDir() {
   if (!fs.existsSync(UPLOAD_DIR)) {

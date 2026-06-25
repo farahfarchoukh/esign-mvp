@@ -4,7 +4,12 @@ let cachedTransporter: Transporter | null = null;
 let usingEthereal = false;
 
 export function getAppUrl(): string {
-  return process.env.APP_URL || "http://localhost:3000";
+  // Explicit override wins; otherwise auto-detect the public URL the host
+  // injects, so signing/download links in emails are clickable in production.
+  if (process.env.APP_URL) return process.env.APP_URL.replace(/\/$/, "");
+  if (process.env.RENDER_EXTERNAL_URL) return process.env.RENDER_EXTERNAL_URL.replace(/\/$/, "");
+  if (process.env.RAILWAY_PUBLIC_DOMAIN) return `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`;
+  return "http://localhost:3000";
 }
 
 function getMailFrom(): string {

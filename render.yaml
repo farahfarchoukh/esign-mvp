@@ -1,0 +1,42 @@
+# Render Blueprint — deploys the app from the Dockerfile with a persistent disk
+# so the SQLite database and uploaded/signed PDFs survive restarts & redeploys.
+#
+# Use: push to GitHub, then on Render → New → Blueprint → pick this repo.
+# Render auto-detects this file. After the first deploy, SMTP env vars below
+# (marked sync:false) are filled in from the Render dashboard.
+#
+# Note: a persistent disk requires a paid instance (Starter, ~$7/mo). For a
+# zero-cost, single-session demo you can drop the `disk:` block and use
+# `plan: free` — but data then resets when the instance sleeps/redeploys.
+
+services:
+  - type: web
+    name: esign-mvp
+    runtime: docker
+    plan: starter
+    autoDeploy: true
+    healthCheckPath: /
+    disk:
+      name: data
+      mountPath: /data
+      sizeGB: 1
+    envVars:
+      # DB + file storage live on the mounted /data disk
+      - key: DATABASE_URL
+        value: file:/data/app.db
+      - key: UPLOAD_DIR
+        value: /data/uploads
+      # APP_URL is auto-derived from RENDER_EXTERNAL_URL (injected by Render),
+      # so signing/download links in emails are correct with no manual step.
+      # Email delivery — set these in the dashboard (Environment tab).
+      # If left unset, the app falls back to Ethereal preview links (logs only).
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        sync: false
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: MAIL_FROM
+        sync: false
