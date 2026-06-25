@@ -12,6 +12,58 @@ browser, and email the sender the completed, stamped PDF.
 
 ---
 
+## Architecture
+
+**The signing workflow (what happens, end to end):**
+
+```mermaid
+flowchart LR
+  A["1 Upload<br/>Sender uploads the PDF"] --> B["2 Prepare<br/>Place fields &amp; assign recipients"]
+  B --> C["3 Send<br/>Email each recipient a private link"]
+  C --> D["4 Sign<br/>Recipient fills &amp; signs in the browser"]
+  D --> E["5 Finalize<br/>Signature flattened into the PDF"]
+  E --> F["6 Complete<br/>Signed PDF returned to the sender"]
+```
+
+**System architecture (technical):**
+
+```mermaid
+flowchart LR
+  subgraph Client[Browser]
+    S[Sender: Upload + Field Editor]
+    R[Recipient: Signing page]
+  end
+  subgraph App[Next.js 14 App - TypeScript]
+    FE[Frontend: react-pdf, signature canvas]
+    API[API Routes: documents, sign, openapi]
+    STAMP[pdf-lib: stamp and flatten]
+    MAIL[Nodemailer]
+    PRISMA[Prisma ORM]
+    SW[Swagger UI /api-docs]
+  end
+  DB[(SQLite: Document, Recipient, Field)]
+  FILES[(File storage: uploads)]
+  SMTP[SMTP - Gmail]
+  INBOX[Recipient inbox]
+  GH[GitHub repo] --> CI[Actions CI] --> CD[Actions CD] --> GHCR[GHCR image] --> DOCKER[Docker compose]
+  S -->|1 upload / 2 place fields| FE
+  R -->|4 open signing link| FE
+  FE -->|HTTP| API
+  API --> STAMP
+  API --> MAIL
+  API --> PRISMA --> DB
+  API -->|PDF read/write| FILES
+  STAMP -->|5 write signed PDF| FILES
+  MAIL -->|3 invite / 6 completed| SMTP --> INBOX
+  INBOX -.signing link.-> R
+  SW -.reads /api/openapi.-> API
+```
+
+> Editable source (two pages — technical map + business flow):
+> [`docs/architecture.drawio`](docs/architecture.drawio) — open in [draw.io](https://www.drawio.com/) (desktop app or **File → Open**).
+
+---
+
 ## Features → assignment requirements
 
 | Requirement                         | How it's implemented                                                       |
