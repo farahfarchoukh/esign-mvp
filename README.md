@@ -43,8 +43,8 @@ flowchart LR
   end
   DB[(SQLite: Document, Recipient, Field)]
   FILES[(File storage: uploads)]
-  SMTP[SMTP - Gmail]
-  INBOX[Recipient inbox]
+  SMTP[SMTP - Gmail or Ethereal fallback]
+  INBOX[Email inbox: recipient signing link + sender completed PDF]
   GH[GitHub repo] --> CI[Actions CI] --> CD[Actions CD] --> GHCR[GHCR image] --> DOCKER[Docker compose]
   S -->|1 upload / 2 place fields| FE
   R -->|4 open signing link| FE

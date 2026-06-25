@@ -53,11 +53,11 @@
         <mxCell id="files" value="File storage (local)&#10;uploads: original + signed PDFs" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=12;" vertex="1" parent="1">
           <mxGeometry x="1080" y="150" width="240" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="smtp" value="SMTP (Gmail)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" vertex="1" parent="1">
+        <mxCell id="smtp" value="SMTP (Gmail)&#10;or Ethereal fallback" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" vertex="1" parent="1">
           <mxGeometry x="1080" y="300" width="240" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="inbox" value="Recipient inbox&#10;(signing link)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" vertex="1" parent="1">
-          <mxGeometry x="1080" y="390" width="240" height="60" as="geometry" />
+        <mxCell id="inbox" value="Email inbox&#10;recipient: signing link&#10;sender: completed PDF" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="390" width="240" height="70" as="geometry" />
         </mxCell>
         <mxCell id="db" value="SQLite (via Prisma)&#10;Document · Recipient · Field" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=14;fillColor=#f5f5f5;strokeColor=#666666;fontSize=12;" vertex="1" parent="1">
           <mxGeometry x="1090" y="480" width="220" height="90" as="geometry" />
