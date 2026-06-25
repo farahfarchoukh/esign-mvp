@@ -96,4 +96,44 @@
       </root>
     </mxGraphModel>
   </diagram>
+  <diagram id="signing-pipeline" name="Signing pipeline (business flow)">
+    <mxGraphModel dx="1100" dy="760" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="826" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="t_title" value="e-Sign workflow — what happens, end to end" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="520" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t_legend" value="Blue = Sender acts&#10;Orange = Recipient acts&#10;Green = System does it automatically" style="text;html=1;align=left;verticalAlign=top;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="40" y="70" width="520" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p1" value="1. Upload&#10;Sender uploads the PDF to be signed" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="160" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="p2" value="2. Prepare&#10;Drop signature / text / date / checkbox / radio fields and assign each recipient" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="240" y="160" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="p3" value="3. Send&#10;Each recipient is emailed a unique, private signing link" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="440" y="160" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="p4" value="4. Sign&#10;Recipient opens the link and fills &amp; signs in the browser (name/date pre-filled)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="640" y="160" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="p5" value="5. Finalize&#10;Signature image and all values are flattened into the PDF" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="840" y="160" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="p6" value="6. Complete&#10;When everyone has signed, the sender gets the finished, signed PDF to download" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="160" width="160" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="f1" style="endArrow=block;html=1;strokeWidth=2;" edge="1" parent="1" source="p1" target="p2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="f2" style="endArrow=block;html=1;strokeWidth=2;" edge="1" parent="1" source="p2" target="p3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="f3" style="endArrow=block;html=1;strokeWidth=2;" edge="1" parent="1" source="p3" target="p4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="f4" style="endArrow=block;html=1;strokeWidth=2;" edge="1" parent="1" source="p4" target="p5"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="f5" style="endArrow=block;html=1;strokeWidth=2;" edge="1" parent="1" source="p5" target="p6"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
 </mxfile>
