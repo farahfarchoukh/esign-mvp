@@ -49,11 +49,10 @@ flowchart LR
   S -->|1 upload / 2 place fields| FE
   R -->|4 open signing link| FE
   FE -->|HTTP| API
-  API --> STAMP
+  API -->|5 stamp & flatten| STAMP
   API --> MAIL
   API --> PRISMA --> DB
   API -->|PDF read/write| FILES
-  STAMP -->|5 write signed PDF| FILES
   MAIL -->|3 invite / 6 completed| SMTP --> INBOX
   INBOX -.signing link.-> R
   SW -.reads /api/openapi.-> API

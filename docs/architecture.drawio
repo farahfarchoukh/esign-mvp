@@ -87,7 +87,7 @@
         <!-- edges: app internal -->
         <mxCell id="e_fe_api" value="HTTP (fetch)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;exitX=1;exitY=0.5;entryX=0;entryY=0.1;" edge="1" parent="1" source="fe" target="api"><mxGeometry relative="1" as="geometry" /></mxCell>
         <mxCell id="e_sw_api" value="reads /api/openapi" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;fontSize=10;exitX=1;exitY=0.5;entryX=0;entryY=0.4;endArrow=open;" edge="1" parent="1" source="sw" target="api"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e_api_stamp" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.1;entryX=0;entryY=0.5;" edge="1" parent="1" source="api" target="stamp"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e_api_stamp" value="5 stamp &amp; flatten" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;exitX=1;exitY=0.1;entryX=0;entryY=0.5;" edge="1" parent="1" source="api" target="stamp"><mxGeometry relative="1" as="geometry" /></mxCell>
         <mxCell id="e_api_mail" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.4;entryX=0;entryY=0.5;" edge="1" parent="1" source="api" target="mail"><mxGeometry relative="1" as="geometry" /></mxCell>
         <mxCell id="e_api_prisma" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.8;entryX=0;entryY=0.5;" edge="1" parent="1" source="api" target="prisma"><mxGeometry relative="1" as="geometry" /></mxCell>
 
