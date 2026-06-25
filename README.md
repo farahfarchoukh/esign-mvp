@@ -183,19 +183,19 @@ footer). It's rendered from the OpenAPI 3.0 spec served by
 **CI** — `.github/workflows/ci.yml` runs on push / PR to `main` (Ubuntu, Node 20):
 `npm ci` → `npx prisma generate` → `npx tsc --noEmit` → `npm run build`.
 
-**CD (documented next step).** The app is already containerized (`Dockerfile` +
-`docker-compose.yml`), so continuous deployment is a small addition once a target
-exists. Two clean paths, depending on hosting:
+**CD** — `.github/workflows/cd.yml` runs on push to `main`: it builds the Docker
+image and **publishes it to GitHub Container Registry (GHCR)** using the built-in
+token (no secrets / external accounts). Pull and run the published artifact:
 
-- **Disk-backed host (Render / Railway / Fly.io):** deploy the Docker image with a
-  persistent volume — SQLite + uploaded/signed PDFs survive as-is, no data-layer
-  changes. Add a deploy job (or connect the repo to the platform) + set the SMTP env.
-- **Serverless (Vercel) :** requires the data-layer swaps in *Production notes*
-  below first (Postgres + object storage), since the filesystem is ephemeral.
+```bash
+docker run -p 3000:3000 --env-file .env ghcr.io/farahfarchoukh/esign-mvp:latest
+```
 
-A zero-setup interim option is publishing the image to GitHub Container Registry
-on each `main` push (uses the built-in token, no secrets) — continuous *delivery*
-of a runnable artifact.
+**Live deployment (further step).** To put it on a public URL, deploy the image to
+a **disk-backed host (Render / Railway / Fly.io)** with a persistent volume — SQLite
++ uploaded/signed PDFs survive as-is, no data-layer changes; just set the SMTP env.
+A **serverless host (Vercel)** would first need the data-layer swaps in *Production
+notes* below (Postgres + object storage), since its filesystem is ephemeral.
 
 ---
 
