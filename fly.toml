@@ -1,0 +1,33 @@
+# Fly.io config for esign-mvp.
+# Fly allows outbound SMTP, so Gmail email works end-to-end here (unlike Railway).
+#
+# IMPORTANT: `app` must be globally unique. If "esign-mvp" is taken, change it
+# here AND in your fly commands. The public URL becomes https://<app>.fly.dev,
+# which the app auto-uses for email links via FLY_APP_NAME (no APP_URL needed).
+
+app = "esign-mvp"
+primary_region = "fra"   # Frankfurt — close to Europe/MENA; change if you prefer
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  DATABASE_URL = "file:/data/app.db"
+  UPLOAD_DIR = "/data/uploads"
+  PORT = "3000"
+
+# Persistent disk for SQLite + uploaded/signed PDFs (survives restarts/deploys).
+[mounts]
+  source = "data"
+  destination = "/data"
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0   # scale to zero when idle; auto-starts on a request
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"

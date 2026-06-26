@@ -59,6 +59,40 @@ Railway includes a starter credit and supports volumes.
 
 ---
 
+## Option C — Fly.io (recommended: free + SMTP works)
+
+Fly.io allows outbound SMTP, so **real Gmail email works end-to-end** (Railway
+blocks SMTP). `fly.toml` is included. A credit card is required even on the free
+allowance, but a small app like this stays within it.
+
+```bash
+# 1. Install flyctl (Windows PowerShell):
+#    iwr https://fly.io/install.ps1 -useb | iex
+fly auth login
+
+# 2. Pick a GLOBALLY-UNIQUE app name and create it (edit `app` in fly.toml to match):
+fly apps create esign-mvp-cc
+
+# 3. Create the persistent volume in the app's region (must match primary_region):
+fly volumes create data --size 1 --region fra -a esign-mvp-cc
+
+# 4. Set email secrets (use your real Gmail App Password, no spaces):
+fly secrets set SMTP_HOST=smtp.gmail.com SMTP_PORT=587 \
+  SMTP_USER=farahfarchoukh@gmail.com SMTP_PASS=your-app-password \
+  MAIL_FROM=farahfarchoukh@gmail.com -a esign-mvp-cc
+
+# 5. Deploy:
+fly deploy -a esign-mvp-cc
+```
+
+Your URL is `https://<app>.fly.dev`. The app auto-derives email links from
+`FLY_APP_NAME`, so no `APP_URL` is needed. `DATABASE_URL`/`UPLOAD_DIR`/`PORT`
+come from `fly.toml`.
+
+**Why email works here but not on Railway:** Fly permits outbound SMTP, and mail
+sent through Gmail is authenticated as your `@gmail.com` (Gmail's SPF/DKIM/DMARC
++ reputation), so it lands in recipient inboxes — including Microsoft 365.
+
 ## After deploying — quick smoke test
 
 1. Open the URL, enter **your own** email as sender, drag in
