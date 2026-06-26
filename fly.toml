@@ -5,7 +5,7 @@
 # here AND in your fly commands. The public URL becomes https://<app>.fly.dev,
 # which the app auto-uses for email links via FLY_APP_NAME (no APP_URL needed).
 
-app = "esign-mvp"
+app = "esign-mvp-cc"
 primary_region = "fra"   # Frankfurt — close to Europe/MENA; change if you prefer
 
 [build]
