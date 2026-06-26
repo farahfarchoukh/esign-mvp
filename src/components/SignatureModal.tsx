@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import SignatureCanvas from "react-signature-canvas";
 
 export default function SignatureModal({
@@ -11,11 +11,39 @@ export default function SignatureModal({
   onSave: (dataUrl: string) => void;
 }) {
   const ref = useRef<SignatureCanvas | null>(null);
+  const wrapRef = useRef<HTMLDivElement | null>(null);
+
+  // Size the canvas backing store to its display size × devicePixelRatio, so the
+  // captured signature is crisp on high-DPI / Retina screens. Without this the
+  // canvas records strokes at a low, mismatched resolution and the stamped
+  // signature comes out blocky/blurry. This mirrors signature_pad's recommended
+  // HiDPI handling.
+  useEffect(() => {
+    const resize = () => {
+      const canvas = ref.current?.getCanvas();
+      const wrap = wrapRef.current;
+      if (!canvas || !wrap) return;
+      const ratio = Math.max(window.devicePixelRatio || 1, 1);
+      const cssWidth = wrap.clientWidth;
+      const cssHeight = 200;
+      canvas.width = Math.round(cssWidth * ratio);
+      canvas.height = Math.round(cssHeight * ratio);
+      canvas.style.width = `${cssWidth}px`;
+      canvas.style.height = `${cssHeight}px`;
+      const ctx = canvas.getContext("2d");
+      ctx?.scale(ratio, ratio);
+      // Re-clear so signature_pad's internal point buffer matches the new size.
+      ref.current?.clear();
+    };
+    resize();
+    window.addEventListener("resize", resize);
+    return () => window.removeEventListener("resize", resize);
+  }, []);
 
   const handleSave = () => {
     const c = ref.current;
     if (!c || c.isEmpty()) return;
-    // Use trimmed canvas for a tight signature image.
+    // Trimmed, full-resolution PNG of the signature.
     const dataUrl = c.getTrimmedCanvas().toDataURL("image/png");
     onSave(dataUrl);
   };
@@ -24,14 +52,14 @@ export default function SignatureModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
       <div className="w-full max-w-lg rounded-lg bg-white p-4 shadow-xl">
         <h3 className="mb-2 text-lg font-semibold">Draw your signature</h3>
-        <div className="rounded border bg-slate-50">
+        <div ref={wrapRef} className="rounded border bg-slate-50">
           <SignatureCanvas
             ref={ref}
             penColor="black"
+            minWidth={1.2}
+            maxWidth={2.6}
             canvasProps={{
-              width: 480,
-              height: 200,
-              className: "w-full rounded",
+              className: "rounded touch-none block",
             }}
           />
         </div>
